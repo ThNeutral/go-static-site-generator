@@ -11,7 +11,7 @@ run_tests() {
   if [[ $? -eq 0 ]]; then
     echo "All tests passed in ${dir}!"
   else
-    echo "Some tests failed in ${dir}. Check the output above for details."
+    echo "Some tests failed in ${dir}. Check the output below for details."
   fi
   echo "$result"
   cd - > /dev/null
@@ -20,7 +20,9 @@ run_tests() {
 # Define the directories containing the packages
 textnode_dir="./internals/textnode"
 htmlnode_dir="./internals/htmlnode"
+splitter_dir="./internals/splitter"
 
 # Run tests for each package
 run_tests "$textnode_dir"
 run_tests "$htmlnode_dir"
+run_tests "$splitter_dir"
