@@ -7,14 +7,14 @@ import (
 )
 
 func TestSplitter(t *testing.T) {
-	input := "`code` normal text **bald** *italian* [to boot dev](https://www.boot.dev) ![rick roll](https://i.imgur.com/aKaOqIh.gif)"
+	input := "~~strikethrough~~ `code` normal text **bald** *italian* [to boot dev](https://www.boot.dev) ![rick roll](https://i.imgur.com/aKaOqIh.gif)"
 	nodes := SplitNodes(input)
 	var hn htmlnode.HTMLNode
 	for _, node := range nodes {
 		hn.Children = append(hn.Children, node.ToHTMLNode())
 	}
 	html := hn.ToHTML()
-	expect := "<code>code</code> normal text <b>bald</b> <i>italian</i><img src=\"https://i.imgur.com/aKaOqIh.gif\" alt=\"rick  roll\" ></img><a href=\"https://www.boot.dev\" >to boot dev</a>  "
+	expect := "<s>strikethrough</s> <code>code</code> normal text <b>bald</b> <i>italian</i><img src=\"https://i.imgur.com/aKaOqIh.gif\" alt=\"rick  roll\" ></img><a href=\"https://www.boot.dev\" >to boot dev</a>  "
 	if html != expect {
 		t.Errorf("SplitNodes(%v) = %v; want %v;", input, html, expect)
 	}

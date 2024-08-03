@@ -12,9 +12,10 @@ const (
 	BOLD_DELIM   = "**"
 	ITALIC_DELIM = "*"
 	CODE_DELIM   = "`"
+	STRIKE_DELIM = "~~"
 )
 
-func DelimToTextType(delim string) int {
+func delimToTextType(delim string) int {
 	switch delim {
 	case BOLD_DELIM:
 		return textnode.BOLD_TYPE
@@ -22,6 +23,8 @@ func DelimToTextType(delim string) int {
 		return textnode.ITALIC_TYPE
 	case CODE_DELIM:
 		return textnode.CODE_TYPE
+	case STRIKE_DELIM:
+		return textnode.STRIKE_TYPE
 	default:
 		return -1
 	}
@@ -35,6 +38,7 @@ func SplitNodes(input string) []textnode.TextNode {
 	nodes := splitNodesTextInternal([]textnode.TextNode{node}, BOLD_DELIM)
 	nodes = splitNodesTextInternal(nodes, ITALIC_DELIM)
 	nodes = splitNodesTextInternal(nodes, CODE_DELIM)
+	nodes = splitNodesTextInternal(nodes, STRIKE_DELIM)
 	nodes = splitNodesImages(nodes)
 	nodes = splitNodesLinks(nodes)
 	return nodes
@@ -49,7 +53,7 @@ func splitNodesTextInternal(oldNodes []textnode.TextNode, delim string) []textno
 			if index%2 == 0 {
 				typeToAdd = oldNode.TextType
 			} else {
-				typeToAdd = DelimToTextType(delim)
+				typeToAdd = delimToTextType(delim)
 			}
 			nodes = append(nodes, textnode.TextNode{
 				Text:     splittedText,

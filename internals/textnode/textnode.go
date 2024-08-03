@@ -9,6 +9,7 @@ const (
 	CODE_TYPE   = iota
 	LINK_TYPE   = iota
 	IMAGE_TYPE  = iota
+	STRIKE_TYPE = iota
 )
 
 const (
@@ -18,6 +19,7 @@ const (
 	CODE_TAG   = "code"
 	LINK_TAG   = "a"
 	IMAGE_TAG  = "img"
+	STRIKE_TAG = "s"
 )
 
 type TextNode struct {
@@ -70,6 +72,11 @@ func (tn TextNode) ToHTMLNode() htmlnode.HTMLNode {
 			hn.Value = ""
 			hn.Props["src"] = tn.URL
 			hn.Props["alt"] = tn.Text
+		}
+	case STRIKE_TYPE:
+		{
+			hn.Tag = STRIKE_TAG
+			hn.Value = tn.Text
 		}
 	}
 	return hn
