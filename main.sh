@@ -10,7 +10,7 @@ if [ ! -d "$TEMP_DIR" ]; then
 fi
 
 # Define the name of the temporary executable
-EXECUTABLE="$TEMP_DIR/temp_go_executable"
+EXECUTABLE="$TEMP_DIR/main"
 
 # Check if go source file is passed as argument
 # if [ -z "$0/main.go" ]; then

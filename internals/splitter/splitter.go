@@ -73,18 +73,20 @@ func splitNodesImages(oldNodes []textnode.TextNode) []textnode.TextNode {
 			continue
 		}
 		for alt, url := range images {
+			splitted := strings.Split(oldNode.Text, fmt.Sprintf("![%v](%v)", alt, url))
+			nodes = append(nodes, textnode.TextNode{
+				Text:     splitted[0],
+				TextType: oldNode.TextType,
+			})
 			nodes = append(nodes, textnode.TextNode{
 				Text:     alt,
 				URL:      url,
 				TextType: textnode.IMAGE_TYPE,
 			})
-			splitted := strings.Split(oldNode.Text, fmt.Sprintf("![%v](%v)", alt, url))
-			for _, split := range splitted {
-				nodes = append(nodes, textnode.TextNode{
-					Text:     split,
-					TextType: oldNode.TextType,
-				})
-			}
+			nodes = append(nodes, textnode.TextNode{
+				Text:     splitted[1],
+				TextType: oldNode.TextType,
+			})
 		}
 	}
 	return nodes
@@ -99,18 +101,20 @@ func splitNodesLinks(oldNodes []textnode.TextNode) []textnode.TextNode {
 			continue
 		}
 		for alt, url := range links {
+			splitted := strings.Split(oldNode.Text, fmt.Sprintf("[%v](%v)", alt, url))
+			nodes = append(nodes, textnode.TextNode{
+				Text:     splitted[0],
+				TextType: oldNode.TextType,
+			})
 			nodes = append(nodes, textnode.TextNode{
 				Text:     alt,
 				URL:      url,
 				TextType: textnode.LINK_TYPE,
 			})
-			splitted := strings.Split(oldNode.Text, fmt.Sprintf("[%v](%v)", alt, url))
-			for _, split := range splitted {
-				nodes = append(nodes, textnode.TextNode{
-					Text:     split,
-					TextType: oldNode.TextType,
-				})
-			}
+			nodes = append(nodes, textnode.TextNode{
+				Text:     splitted[1],
+				TextType: oldNode.TextType,
+			})
 		}
 	}
 	return nodes
